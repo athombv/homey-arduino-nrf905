@@ -3,10 +3,10 @@
 
 using namespace Homey;
 
-#define RETRANS_CYCLES 	5	
+#define RETRANS_CYCLES 	10	
 #define SEQUENCENR_MAX 	128
 
-#define MESSAGE_ACK
+//#define MESSAGE_ACK
 
 Radio::Radio(uint8_t address) : mAddress(address) {}
 
