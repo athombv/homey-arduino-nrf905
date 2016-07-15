@@ -18,7 +18,8 @@ namespace Homey {
 		bool send(uint8_t address, void* data, uint16_t size);
 		void listeningMode(void);
 
-		bool getData(void* data, uint16_t size);
+		bool getData(void* data, uint16_t size, uint8_t* srcAddress);
+		void onData(uint8_t* data, uint8_t size);
 
 		void enable(void);
 		void disable(void);

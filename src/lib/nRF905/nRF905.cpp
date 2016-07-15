@@ -109,6 +109,7 @@ typedef struct{
 static void setConfigReg1(uint8_t, uint8_t, uint8_t);
 static void setConfigReg2(uint8_t, uint8_t, uint8_t);
 static void setConfigRegister(uint8_t, uint8_t);
+extern void nRF905_on_data(uint8_t* data, uint8_t size);
 static noinline void defaultConfig(void);
 static void setAddress(void*, uint8_t);
 #if !NRF905_INTERRUPTS
@@ -617,6 +618,8 @@ ISR(INT_VECTOR)
 				uint8_t len = config.payloadSize;
 				for(uint8_t i=0;i<len;i++)
 					rxData.buffer[i] = spi_transfer(NRF905_CMD_NOP);
+
+				nRF905_on_data((uint8_t*) rxData.buffer, len);
 				rxData.ready = true;
 			}
 			// We're still in receive mode

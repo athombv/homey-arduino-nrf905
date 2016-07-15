@@ -13,10 +13,12 @@ void setup() {
 
 void loop() {
 	char data[8];
+	uint8_t srcAddress;
 
-	while( !radio.getData(data, sizeof(data)) );
+	while( !radio.getData(data, sizeof(data), &srcAddress);
+	Serial.println("received:");
 	uint8_t i;
 	for(i = 0; i < 8; i++) {
-		Serial.println(data[i], HEX);	
+		Serial.println(data[i] & 0xFF, HEX);	
 	}
 }
