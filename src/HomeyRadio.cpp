@@ -6,7 +6,7 @@
 
 using namespace Homey;
 
-#define RETRANS_CYCLES 	250
+#define RETRANS_CYCLES 	5
 #define SEQUENCENR_MAX 	128
 #define ACK_TIMEOUT		10 // ms
 
@@ -101,10 +101,10 @@ bool Radio::getData(void* data, uint16_t size, uint8_t* srcAddress) {
 			buffer[1] |= 0x80; // set ack message 
 
 			nRF905_setData(buffer, sizeof(buffer));
-			// send message non-blocking
+			// send message 
 			uint8_t i;
 			for(i = 0; i < RETRANS_CYCLES; i++) {
-				nRF905_send();
+				while(!nRF905_send());
 			}
 			// turn back into receive mode
 			nRF905_receive();	
