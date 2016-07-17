@@ -1,18 +1,18 @@
 #include "lib/nRF905/nRF905.h"
 #include "HomeyRadio.h"
 
+#include <util/delay.h>
+#include <Arduino.h>
+
 using namespace Homey;
 
-#define RETRANS_CYCLES 	10	
+#define RETRANS_CYCLES 	250
 #define SEQUENCENR_MAX 	128
+#define ACK_TIMEOUT		10 // ms
 
 #define MESSAGE_ACK
 
 static Radio* radio; 
-/* nrf on data event */
-void nRF905_on_data(uint8_t* data, uint8_t size) {
-	radio->onData(data, size);
-}
 
 Radio::Radio(uint8_t address) : mAddress(address) {
 	radio = this;	
@@ -56,15 +56,18 @@ bool Radio::send(uint8_t address, void* data, uint16_t size) {
 	#ifdef MESSAGE_ACK
 	// block until data has been received
 	uint8_t rxBuffer[NRF905_PAYLOAD_SIZE];
-	while( !nRF905_getData(rxBuffer, sizeof(rxBuffer)) );
+	uint16_t timeout = ACK_TIMEOUT * 2;
+	while( !nRF905_getData(rxBuffer, sizeof(rxBuffer)) && timeout--) _delay_us(500);
 
+	// timeout occured?
+	if(timeout <= 0)
+		return false;
 	// received ack message?
 	if(!(rxBuffer[1] & 0x80) || seqNr != (rxBuffer[1] & 0x7F) )
 		return false;
 	// is ack coming from the sender?
 	if(rxBuffer[0] != address) 
 		return false;
-
 	#endif
 
 	return true;
@@ -78,32 +81,38 @@ bool Radio::getData(void* data, uint16_t size, uint8_t* srcAddress) {
 	if(size > NRF905_PAYLOAD_SIZE-2) return false;
 
 	uint8_t buffer[NRF905_PAYLOAD_SIZE];
+	static uint8_t prevSeqNr = 0xFF;
 	if( nRF905_getData(buffer, sizeof(buffer)) ) {
 		// received a 'data' message?	
-		if( !(buffer[1] & 0x80)	) {
-			// set address
-			*srcAddress = buffer[0];			
+		uint8_t msgType = buffer[1] & 0x80;
+		uint8_t msgNr = buffer[1] & 0x7F;
+		uint8_t msgSrcAddr = buffer[0];
+		// if msgtype is 'data' and different from the previous
+		if( msgType == 0 && msgNr != prevSeqNr) {
+			prevSeqNr = msgNr; 
+			// set src address
+			*srcAddress = msgSrcAddr;
+			// copy payload 
 			memcpy((void*) data,(void*) (buffer+2), size);
+			// change dest address
+			nRF905_setTXAddress((void*) &msgSrcAddr); // set address to send ack to
+			// set header	
+			buffer[0] = mAddress; // set source address
+			buffer[1] |= 0x80; // set ack message 
+
+			nRF905_setData(buffer, sizeof(buffer));
+			// send message non-blocking
+			uint8_t i;
+			for(i = 0; i < RETRANS_CYCLES; i++) {
+				nRF905_send();
+			}
+			// turn back into receive mode
+			nRF905_receive();	
 
 			return true;
 		}
 	}
 	return false;
-}
-
-void Radio::onData(uint8_t* data, uint8_t size) {
-	uint8_t buffer[NRF905_PAYLOAD_SIZE];	
-	uint8_t idx = 0;
-
-	buffer[idx++] = mAddress; 		// set source address
-	buffer[idx++] = data[1] & 0x80; // set ack message 
-	// copy data to buffer
-	memcpy((void*) (buffer+idx),(void*) (data+idx), NRF905_PAYLOAD_SIZE -2);
-
-	nRF905_setTXAddress((void*) &data[0]); // set address to send ack to
-	nRF905_setData(buffer, sizeof(buffer));
-	// send message, we do not have to wait 
-	nRF905_send();
 }
 
 void Radio::enable(void) {
