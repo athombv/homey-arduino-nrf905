@@ -6,7 +6,7 @@
 
 using namespace Homey;
 
-#define RETRANS_CYCLES 	1
+#define RETRANS_CYCLES 	2
 #define SEQUENCENR_MAX 	128
 #define ACK_TIMEOUT		200 // ms
 
@@ -28,7 +28,7 @@ void Radio::initialize(void) {
 }
 
 bool Radio::send(uint8_t address, void* data, uint16_t size) {
-	if(size > NRF905_PAYLOAD_SIZE-1) return false;
+	if(size > NRF905_PAYLOAD_SIZE-2) return false;
 
 	static uint8_t seqNr = 0;
 	uint8_t txBuffer[NRF905_PAYLOAD_SIZE];
