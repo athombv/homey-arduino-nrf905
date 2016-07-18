@@ -6,9 +6,9 @@
 
 using namespace Homey;
 
-#define RETRANS_CYCLES 	5
+#define RETRANS_CYCLES 	1
 #define SEQUENCENR_MAX 	128
-#define ACK_TIMEOUT		10 // ms
+#define ACK_TIMEOUT		200 // ms
 
 #define MESSAGE_ACK
 
@@ -87,7 +87,7 @@ bool Radio::getData(void* data, uint16_t size, uint8_t* srcAddress) {
 		uint8_t msgType = buffer[1] & 0x80;
 		uint8_t msgNr = buffer[1] & 0x7F;
 		uint8_t msgSrcAddr = buffer[0];
-		// if msgtype is 'data' and different from the previous
+		// if msgtype is 'data' and message is different then the previous one
 		if( msgType == 0 && msgNr != prevSeqNr) {
 			prevSeqNr = msgNr; 
 			// set src address
