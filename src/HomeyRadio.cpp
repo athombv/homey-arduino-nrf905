@@ -6,9 +6,9 @@
 
 using namespace Homey;
 
-#define RETRANS_CYCLES 	2
+#define RETRANS_CYCLES 	5
 #define SEQUENCENR_MAX 	128
-#define ACK_TIMEOUT		200 // ms
+#define ACK_TIMEOUT		50 // ms
 
 #define MESSAGE_ACK
 
@@ -27,7 +27,7 @@ void Radio::initialize(void) {
   nRF905_setRXAddress(&mAddress);
 }
 
-bool Radio::send(uint8_t address, void* data, uint16_t size) {
+bool Radio::send(uint8_t destAddress, void* data, uint8_t size) {
 	if(size > NRF905_PAYLOAD_SIZE-2) return false;
 
 	static uint8_t seqNr = 0;
@@ -42,7 +42,7 @@ bool Radio::send(uint8_t address, void* data, uint16_t size) {
 
 	memcpy((void*) (txBuffer+idx),(void*) data, size);
 	// set destination address
-	nRF905_setTXAddress((void*) &address);
+	nRF905_setTXAddress((void*) &destAddress);
 	nRF905_setData(txBuffer, sizeof(txBuffer));
 
 	// retransmit message 
@@ -66,7 +66,7 @@ bool Radio::send(uint8_t address, void* data, uint16_t size) {
 	if(!(rxBuffer[1] & 0x80) || seqNr != (rxBuffer[1] & 0x7F) )
 		return false;
 	// is ack coming from the sender?
-	if(rxBuffer[0] != address) 
+	if(rxBuffer[0] != destAddress) 
 		return false;
 	#endif
 
@@ -77,7 +77,7 @@ void Radio::listeningMode(void) {
 	nRF905_receive();
 }
 
-bool Radio::getData(void* data, uint16_t size, uint8_t* srcAddress) {
+bool Radio::getData(uint8_t* srcAddress, void* data, uint8_t size) {
 	if(size > NRF905_PAYLOAD_SIZE-2) return false;
 
 	uint8_t buffer[NRF905_PAYLOAD_SIZE];

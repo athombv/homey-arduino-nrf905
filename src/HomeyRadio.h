@@ -15,10 +15,10 @@ namespace Homey {
 
 		void initialize(void);	
 
-		bool send(uint8_t address, void* data, uint16_t size);
+		bool send(uint8_t destAddress, void* data, uint8_t size);
 		void listeningMode(void);
 
-		bool getData(void* data, uint16_t size, uint8_t* srcAddress);
+		bool getData(uint8_t* srcAddress, void* data, uint8_t size);
 		void onData(uint8_t* data, uint8_t size);
 
 		void enable(void);
