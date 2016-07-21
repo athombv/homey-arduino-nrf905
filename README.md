@@ -76,6 +76,7 @@ Data can be received by calling the `getData(data, size, srcAddress)` method or 
     * ***returning:***  -
     * ***Description:***  power down nRF905 module 
     * ***Parameters:*** -
+    
 ## Examples
 The library includes several examples which can be found in the examples folder. Three examples are provided which explain respectively sending, receiving and requests,
 
