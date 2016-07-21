@@ -76,7 +76,6 @@ Data can be received by calling the `getData(data, size, srcAddress)` method or 
     * ***returning:***  -
     * ***Description:***  power down nRF905 module 
     * ***Parameters:*** -
-
 ## Examples
 The library includes several examples which can be found in the examples folder. Three examples are provided which explain respectively sending, receiving and requests,
 
@@ -84,7 +83,7 @@ The library includes several examples which can be found in the examples folder.
 - examples/print_data
 
 ## Homey App driver
-A Nodejs Homey driver is written which can be included in your Homey app project. The driver includes a signal-definition and message acking.  
+A Nodejs Homey driver is written which can be included in your Homey app project. The driver includes a signal-definition and message acking.  The driver can be found [here](https://github.com/athombv/node-homey-arduinodriver).
 
 ## Contributing
 Contribute to this library by sending me pull-requests.
