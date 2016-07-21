@@ -1,7 +1,8 @@
 # Homey arduino nRF905
-This library can be used communicate between a Homey and a arduino using the nRF905 (433MHz) module. The library automatically acknowledges every incoming message so that the sender knows that de message has been received successfully. 
+This library can be used to communicate between a Homey and a arduino using the nRF905 (433MHz) module. The library automatically acknowledges every incoming message so that the sender knows that the message has been received successfully. 
 
-Homey currently only supports polling mode, which means that only Homey can initiate  the communication between Homey and the Arduino. The reason for this is that Homey cannot receive data from GFSK and ASK modulated devices at the same time.
+Homey currently only supports polling mode, which means that only Homey can initiate the communication between Homey and the Arduino. The reason for this is that Homey cannot receive data from GFSK and ASK modulated devices at the same time. 
+After Homey has transmitted to the arduino it switches to receive mode and waits 200ms for the arduino to respond back. Within the 200ms the arduino can send data to Homey.
 
 ## Requirements
 - nRF905 module on 433MHz
@@ -78,13 +79,12 @@ Data can be received by calling the `getData(data, size, srcAddress)` method or 
 ## Examples
 The library includes several examples which can be found in the examples folder. Three examples are provided which explain respectively sending, receiving and requests,
 
-- examples/Hello_world
-- examples/Print_data
-- examples/Request_handler
+- examples/hello_world
+- examples/print_data
 ## Homey App driver
 A Nodejs Homey driver is written which can be included in your Homey app project. The driver includes a signal-definition and message acking.  The driver can be found [here](http://github.com...).
 ## Contributing
 Contribute to this library by sending me pull-requests.
 ## Credits
 Special credit to Zak Kemble for his nRF905 driver
-## Licence
+
