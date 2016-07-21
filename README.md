@@ -87,4 +87,3 @@ A Nodejs Homey driver is written which can be included in your Homey app project
 Contribute to this library by sending me pull-requests.
 ## Credits
 Special credit to Zak Kemble for his nRF905 driver
-
