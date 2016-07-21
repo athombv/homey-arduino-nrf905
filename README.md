@@ -81,9 +81,12 @@ The library includes several examples which can be found in the examples folder.
 
 - examples/hello_world
 - examples/print_data
+
 ## Homey App driver
-A Nodejs Homey driver is written which can be included in your Homey app project. The driver includes a signal-definition and message acking.  The driver can be found [here](http://github.com...).
+A Nodejs Homey driver is written which can be included in your Homey app project. The driver includes a signal-definition and message acking.  
+
 ## Contributing
 Contribute to this library by sending me pull-requests.
+
 ## Credits
 Special credit to Zak Kemble for his nRF905 driver
