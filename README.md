@@ -11,8 +11,31 @@ After Homey has transmitted to the arduino it switches to receive mode and waits
 
 ## Installation
 ### Hardware
-The Homey Arduino library uses the nRF905 library developed by Zak Kemble to communicate with the nRF905. 
-Information about how to wire the nRF905 to your arduino can be found on his [website](http://blog.zakkemble.co.uk/nrf905-avrarduino-librarydriver/).
+Dispite the fact that the nRF905 module uses 3.3V instead of 5V, we haven't experienced any problems when wiring the nRF905 directly
+to the arduino instead of using voltage dividers. 
+
+***You still have to connect the power pin (vcc) of the nRF905 module to the 3.3v pin of the arduino. ***
+
+The fritzing scheme below shows how to correctly wire your nRF905 module to the arduino. 
+
+![fritzing scheme](doc/arduino_nRF905_wiring.png "nRF905 wiring scheme")
+
+The table below shows all the pin connections between the nRF905 and the arduino:
+
+| nRF905 pins | arduino pins | 
+| ----------- | ------------ |
+|     VCC     |     3.3V     |
+|     GND     |     GND      |
+|     CSN     |     10       |
+|     SCK     |     13       |
+|     SI      |     11       |
+|     SO      |     12       |  
+|     AM      |     -        |
+|     DR      |     3        |
+|     CD      |     2        |
+|     CE      |     7        |
+|     PWR     |     8        |
+|     TXE     |     9        |
 
 ### Software
 The library can be imported by downloading the library as a .zip file and then add it to the Arduino IDE by using the library manager. 
