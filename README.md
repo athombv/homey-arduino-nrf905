@@ -14,7 +14,7 @@ After Homey has transmitted to the arduino it switches to receive mode and waits
 Dispite the fact that the nRF905 module uses 3.3V instead of 5V, we haven't experienced any problems when wiring the nRF905 directly
 to the arduino instead of using voltage dividers. 
 
-***You still have to connect the power pin (vcc) of the nRF905 module to the 3.3v pin of the arduino. ***
+**You still have to connect the power pin (vcc) of the nRF905 module to the 3.3v pin of the arduino.**
 
 The fritzing scheme below shows how to correctly wire your nRF905 module to the arduino. 
 
@@ -64,41 +64,41 @@ Data can be received by calling the `getData(data, size, srcAddress)` method or 
 ### Methods
 
 - `void Radio::initialize(void)`
-    * ***returning:***      -
-    * ***Description:***  Initializing nRF905 module
-    * ***Parameters:*** -
+    * **returning:**      -
+    * **Description:**  Initializing nRF905 module
+    * **Parameters:** -
     
 
 - `bool Radio::send(byte destAddress, void* data, byte size)`
-    * ***returning:***  True when Homey has succesfully received the data
-    * ***Description:***  Method to send data to a Homey
-    * ***Parameters:***
-        * ***address:*** address of the Homey device
-        * ***data:*** pointer to a byte-array
-        * ***size:*** size of byte-array
+    * **returning:**  True when Homey has succesfully received the data
+    * **Description:**  Method to send data to a Homey
+    * **Parameters:**
+        * ***address:** address of the Homey device
+        * ***data:** pointer to a byte-array
+        * ***size:** size of byte-array
     
 - `bool Radio::getData(byte* srcAddress, void* data, byte size)`
-    * ***returning:***  True when nRF905 has successfully received data from Homey
-    * ***Description:***  Method to send data to a Homey
-    * ***Parameters:***
-        * ***address:*** address of the Homey device
-        * ***data:*** pointer to a byte-array
-        * ***size:*** size of byte-array
+    * **returning:**  True when nRF905 has successfully received data from Homey
+    * **Description:**  Method to send data to a Homey
+    * **Parameters:**
+        * **address:** address of the Homey device
+        * **data:** pointer to a byte-array
+        * **size:** size of byte-array
 
 - `void Radio::listeningMode(void)`
-    * ***returning:***  -
-    * ***Description:***  enable nRF905 module to receive data
-    * ***Parameters:*** -
+    * **returning:**  -
+    * **Description:**  enable nRF905 module to receive data
+    * **Parameters:** -
 
 - `void Radio::enable(void)`
-    * ***returning:***  -
-    * ***Description:***  power up nRF905 module
-    * ***Parameters:*** -
+    * **returning:**  -
+    * **Description:**  power up nRF905 module
+    * **Parameters:** -
 
 - `void Radio::disable(void)`
-    * ***returning:***  -
-    * ***Description:***  power down nRF905 module 
-    * ***Parameters:*** -
+    * **returning:**  -
+    * **Description:**  power down nRF905 module 
+    * **Parameters:** -
     
 ## Examples
 The library includes several examples which can be found in the examples folder. Three examples are provided which explain respectively sending, receiving and requests,
