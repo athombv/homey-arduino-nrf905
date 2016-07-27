@@ -101,6 +101,8 @@ bool Radio::getData(uint8_t* srcAddress, void* data, uint8_t size) {
 			buffer[1] |= 0x80; // set ack message 
 
 			nRF905_setData(buffer, sizeof(buffer));
+			// wait for homey to switch to rx mode
+			_delay_ms(3);
 			// send message 
 			uint8_t i;
 			for(i = 0; i < RETRANS_CYCLES; i++) {
