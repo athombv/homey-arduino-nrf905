@@ -40,17 +40,11 @@ The table below shows all the pin connections between the nRF905 and the arduino
 ### Software
 The library can be imported by downloading the library as a .zip file and then add it to the Arduino IDE by using the library manager. 
 
-Alternatively, it is also possible to add the contents of the library into the same directory as your Arduino project
-
 ## Usage
 Examples are provided to give you a quick overview of how to use the library. 
 include the library into your project by adding the header file
 
 `#include <HomeyRadio.h>`
-
-or
-
-`#include "HomeyRadio.h"` if the library was added in the same directory as the project
 
 After that you need to create a Homey-Radio instance with a desired receiver address (0xFF in this example)
 and call the initialize method to initialize the nRF905 module, as shown in the example below.
