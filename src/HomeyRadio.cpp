@@ -110,6 +110,8 @@ bool Radio::getData(uint8_t* srcAddress, void* data, uint8_t size) {
 			}
 			// turn back into receive mode
 			nRF905_receive();	
+			// wait until device is back into receive mode
+			while(nRF905_getState() != NRF905_RADIO_STATE_RX);
 
 			return true;
 		}
