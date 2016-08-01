@@ -47,12 +47,12 @@ include the library into your project by adding the header file
 
 `#include <HomeyRadio.h>`
 
-After that you need to create a Homey-Radio instance with a desired receiver address (0xFF in this example)
-and call the initialize method to initialize the nRF905 module, as shown in the example below.
+After that you need to create a Homey-Radio instance with a desired receiver address between 0x00 and 0xFE.
+Then call the initialize method to initialize the nRF905 module. A example is shown below.
 ```
 #include <HomeyRadio.h>
 
-Homey::Radio radio(0xFF);
+Homey::Radio radio(0x50);
 
 void setup() {
     radio.initialize();
@@ -75,7 +75,7 @@ Data can be received by calling the `getData(data, size, srcAddress)` method or 
     * **returning:**  True if Homey has succesfully received the data
     * **Description:**  Method to send data to a Homey
     * **Parameters:**
-        * ***address:** address of the Homey device
+        * ***address:** address of the Homey device between 0x00 and 0xFE
         * ***data:** pointer to a byte-array
         * ***size:** size of byte-array
     
